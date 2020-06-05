@@ -5,8 +5,10 @@ import { ReactComponent as Logo } from "../../assets/logo.svg";
 import "./header.styles.scss";
 import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
+import CartDropDown from "../cart-dropdown/cart-dropdown.component";
+import CartIcon from "../cart-icon/cart-icon.component";
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, toggleCartHidden }) => {
   console.log(currentUser);
 
   return (
@@ -35,13 +37,19 @@ const Header = ({ currentUser }) => {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {
+        !toggleCartHidden && <CartDropDown />
+      }
+      
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  toggleCartHidden: state.cart.hidden
 });
 
 export default connect(mapStateToProps)(Header);
